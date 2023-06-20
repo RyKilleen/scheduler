@@ -1,0 +1,86 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --timeline-tick-color: rgb(194, 194, 194);
+  --timeline-padding: 1rem;
+}
+
+.timeline {
+  padding: var(--timeline-padding);
+  position: relative;
+}
+
+.timelineHeader {
+  width: 100%;
+  /* min-width: 900px; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.timelineHour {
+  width: 100%;
+  padding-top: 1rem;
+  position: relative;
+}
+
+.tickContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  border-left: 1px solid;
+  border-left-color: var(--timeline-tick-color);
+}
+
+.timeline .tickContainer {
+  position: absolute;
+  top: calc(var(--timeline-padding) + 1rem);
+  left: var(--timeline-padding);
+  right: var(--timeline-padding);
+  bottom: 0;
+  width: auto;
+}
+
+*:last-of-type .tickContainer {
+  border-right: 1px solid var(--timeline-tick-color);
+}
+
+.timelineTicks {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 16px;
+}
+
+.timelineHour:last-of-type .timelineTicks {
+  border-right: 1px solid var(--timeline-tick-color);
+}
+
+.tick {
+  border-left: 1px solid;
+  border-left-color: var(--timeline-tick-color);
+}
+
+.tickLabel {
+  font-size: 12px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.tickLabel.tickLabel--end {
+  left: unset;
+  right: 0;
+  transform: translateX(50%);
+}
+
+.timelineHour:nth-of-type(even) .tickLabel:not(.tickLabel--end) {
+  display: none;
+}

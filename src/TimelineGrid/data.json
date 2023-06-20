@@ -1,0 +1,8 @@
+[
+  { "id": 1, "day": 1, "timeRange": [480, 1080], "comfortRange": [60, 80] },
+  { "id": 6, "day": 1, "timeRange": [240, 420], "comfortRange": [60, 80] },
+  { "id": 2, "day": 2, "timeRange": [480, 1080], "comfortRange": [60, 80] },
+  { "id": 3, "day": 3, "timeRange": [480, 1080], "comfortRange": [60, 80] },
+  { "id": 4, "day": 4, "timeRange": [480, 1080], "comfortRange": [60, 80] },
+  { "id": 5, "day": 5, "timeRange": [480, 1080], "comfortRange": [60, 80] }
+]
