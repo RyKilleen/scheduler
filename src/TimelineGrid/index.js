@@ -2,17 +2,16 @@ import "./styles.css";
 import {
   DndContext,
   useDroppable,
-  useDraggable
+  useDraggable,
   // DragOverlay
 } from "@dnd-kit/core";
 import {
   createSnapModifier,
   restrictToParentElement,
-  restrictToHorizontalAxis
+  restrictToHorizontalAxis,
 } from "@dnd-kit/modifiers";
 import { forwardRef, useEffect, useState, useRef } from "react";
-import { clamp, mergeRefs } from "./utils";
-import { groupBy } from "./utils";
+import { clamp, mergeRefs, groupBy } from "./utils";
 import { useStore } from "./store";
 
 const positionToOffset = (position, gridSize) => {
@@ -42,7 +41,7 @@ export const TimelineGrid = () => {
   const updateItem = useStore((state) => state.updateItem);
   const getItem = useStore((state) => state.getItem);
 
-  const snapToGridModifier = createSnapModifier(gridSize);
+  const snapToGridModifier = createSnapModifier(gridSize / 4);
   const transformPosition = (dx, lastX, clampFn) => {
     const offsetDelta = positionToOffset(dx, gridSize);
     const newOffset = lastX + offsetDelta;
@@ -81,7 +80,7 @@ export const TimelineGrid = () => {
         modifiers={[
           restrictToHorizontalAxis,
           restrictToParentElement,
-          snapToGridModifier
+          snapToGridModifier,
         ]}
         onDragEnd={handleDragEnd}
       >
@@ -111,10 +110,10 @@ export const TimelineGrid = () => {
 
 const Weekday = ({ children }) => {
   const { isOver, setNodeRef } = useDroppable({
-    id: "droppable"
+    id: "droppable",
   });
   const style = {
-    color: isOver ? "green" : undefined
+    color: isOver ? "green" : undefined,
   };
   return (
     <div className="timelineGridRow" ref={setNodeRef} style={style}>
@@ -131,7 +130,7 @@ const GridItem = forwardRef(
       style={{
         "--hour-offset": offset,
         "--hour-length": length,
-        ...style
+        ...style,
       }}
       {...rest}
     >
@@ -146,7 +145,7 @@ const DraggableItem = ({
   length,
   calculateOffset,
   calculateLength,
-  children
+  children,
 }) => {
   const parentRef = useRef(null);
   const {
@@ -155,14 +154,14 @@ const DraggableItem = ({
     transform,
     attributes,
     setActivatorNodeRef,
-    isDragging
+    isDragging,
   } = useDraggable({
     id: `${id}-move`,
     data: {
       id,
       action: "move",
-      previousOffset: offset
-    }
+      previousOffset: offset,
+    },
   });
 
   const {
@@ -170,14 +169,14 @@ const DraggableItem = ({
     listeners: resizeListeners,
     transform: resizeTransform,
     attributes: resizeAttributes,
-    setActivatorNodeRef: setResizeActivatorNodeRef
+    setActivatorNodeRef: setResizeActivatorNodeRef,
   } = useDraggable({
     id: `${id}-resize`,
     data: {
       id,
       action: "resize",
-      previousLength: length
-    }
+      previousLength: length,
+    },
   });
 
   const newOffset = calculateOffset(transform?.x, offset);
@@ -189,19 +188,19 @@ const DraggableItem = ({
     if (transform) {
       moveStyles = {
         "--hour-offset": newOffset,
-        transform: "translateY(-5px)"
+        transform: "translateY(-5px)",
       };
     }
 
     if (resizeTransform) {
       resizeStyles = {
-        "--hour-length": newLength
+        "--hour-length": newLength,
       };
     }
 
     return {
       ...moveStyles,
-      ...resizeStyles
+      ...resizeStyles,
     };
   };
   const style = handleTransformStyles();
