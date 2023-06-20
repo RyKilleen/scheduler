@@ -1,21 +1,22 @@
 import { create } from "zustand";
 import data from "./data";
+import "./transform";
 
-const timeRangeToOffset = ([start, end]) => {
+const timeRangeToOffset = ({ start, duration }) => {
   const offset = start / 60;
-  const length = end / 60 - offset;
+  const length = duration / 60;
   return { offset, length };
 };
 
 const entryToDisplayItem = (obj) => {
-  const { offset, length } = timeRangeToOffset(obj.timeRange);
+  const { offset, length } = timeRangeToOffset(obj);
 
   return {
     id: obj.id,
     day: obj.day,
     comfortRange: obj.comfortRange,
     offset,
-    length
+    length,
   };
 };
 
@@ -34,8 +35,8 @@ export const useStore = create((set, get) => ({
 
       return {
         ...state,
-        items: newItems
+        items: newItems,
       };
     });
-  }
+  },
 }));
